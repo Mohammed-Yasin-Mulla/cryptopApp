@@ -1,0 +1,52 @@
+.cointainer{
+    border: 1px solid black;
+}
+.view-heading-cointainer{
+    background-color: yellow;
+    border-bottom: 1px solid black;
+}
+.view-cointainer{
+    display: flex;
+    width: 50%;
+}
+.view-row{
+    display: flex;
+}
+.view{
+    display: flex;
+    width: 200px;
+    justify-content: start;
+    align-items: center;
+    margin-right: 25px;
+    /* border-right: 2px solid black; */
+    position: relative;
+}
+.view h1 {
+    font-size:20px;
+
+}
+.view-symbol{
+    position: absolute;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+
+}
+.view-data{
+    display: flex;
+    width: 100px;
+    position: relative;
+
+}
+.view-price{
+    margin-right: 10px;
+}
+.view-button{
+    position: absolute;
+    right: 0;
+    
+}
