@@ -20,6 +20,9 @@ export default function View(props) {
       </div>
     );
   });
+
+
+  
   return (
     <div>
       <div className="cointainer">

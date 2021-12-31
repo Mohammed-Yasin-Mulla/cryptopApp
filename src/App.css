@@ -15,6 +15,14 @@
     margin-top: 64px;
 
 }
+.coin-app  ul {
+    list-style-type: none;
+    display: flex;
+}
+.coin-app  ul > li{
+    margin-right: 15px;
+}
+
 
 .coin-search{
     margin-bottom: 64px;
@@ -38,6 +46,12 @@
 .coin-table{
     border: 5px solid black;
 }
+.coin-card{
+    display:flex;
+
+    width:90%;
+    flex-wrap: wrap;
+}
 
 .paginationBttns{
     width: 80%;
@@ -58,4 +72,7 @@
     border: 1px solid grey;
     color: grey;
     cursor: pointer;
+}
+.table-heading{
+    background-color: grey;
 }

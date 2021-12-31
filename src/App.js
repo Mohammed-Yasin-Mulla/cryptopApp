@@ -11,6 +11,8 @@ import {
 } from "react-router-dom";
 import About from "./pages/About";
 import View from "./pages/View";
+import Card from "./Card";
+import Navbar from './Navbar'
 
 export default function App() {
   const [coins, setCoins] = React.useState([]);
@@ -78,58 +80,75 @@ export default function App() {
       );
     });
   
-
+    const slicedArray = coins.slice(0,4);
+    
+    const cardDisplay = slicedArray.map(data => {return(
+      
+        <Card symbol={data.symbol}  image={data.image}   price={data.current_price}/>
+     
+    )})
   return (
-    <div className="coin-app">
-      <h1 className="coin-text">Coins</h1>
-      <Router>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <div className="coin-search">
-                  <form>
-                    <input
-                      type="text"
-                      placeholder="Search"
-                      className="coin-input"
-                      onChange={handelChange}
+    <div>
+        <Navbar/>
+      <div className="coin-app">
+      
+        <div className="coin-card">
+          {cardDisplay}
+        </div>
+      
+        <h1 className="coin-text">Coins</h1>
+        <Router>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <div className="coin-search">
+                    <form>
+                      <input
+                        type="text"
+                        placeholder="Search"
+                        className="coin-input"
+                        onChange={handelChange}
+                      />
+                    </form>
+                  </div>
+                  <div className="table-heading">
+
+                  <Coin
+                    name={"Name"}
+                    image={
+                      "https://static.vecteezy.com/system/resources/previews/000/350/234/original/vector-dollars-coin-icon.jpg"
+                    }
+                    symbol={"Symbol"}
+                    marketcap={"Market Cap"}
+                    price={"Price"}
+                    priceChange={"Percentage"}
+                    volume={"Volume"}
                     />
-                  </form>
-                </div>
-                <Coin
-                  name={"Name"}
-                  image={
-                    "https://static.vecteezy.com/system/resources/previews/000/350/234/original/vector-dollars-coin-icon.jpg"
-                  }
-                  symbol={"Symbol"}
-                  marketcap={"Market Cap"}
-                  price={"Price"}
-                  priceChange={"Percentage"}
-                  volume={"Volume"}
-                />
-                <div className="coin-table">
-                  {displayData}
-                  <ReactPaginate
-                    previewsLabel={"Previous"}
-                    nextLabel={"Next"}
-                    pageCount={pageCount}
-                    onPageChange={changePage}
-                    containerClassName={"paginationBttns"}
-                    previousClassName={"previousBttn"}
-                    nextLinkClassName={"nextBttn"}
-                    disabledClassName={"paginationDisabled"}
-                    activeClassName={"paginationActive"}
-                  />
-                </div>
-              </>
-            }
-          />
-          <Route path="/view" element={<View deleteCoin={deleteCoins} data={savedCoins}/>} />
-          <Route path="/about" element={<About />} />
-        </Routes>
-      </Router>
+                    </div>
+                  <div className="coin-table">
+                    {displayData}
+                    <ReactPaginate
+                      previewsLabel={"Previous"}
+                      nextLabel={"Next"}
+                      pageCount={pageCount}
+                      onPageChange={changePage}
+                      containerClassName={"paginationBttns"}
+                      previousClassName={"previousBttn"}
+                      nextLinkClassName={"nextBttn"}
+                      disabledClassName={"paginationDisabled"}
+                      activeClassName={"paginationActive"}
+                    />
+                  </div>
+                </>
+              }
+            />
+            <Route path="/view" element={<View deleteCoin={deleteCoins} data={savedCoins}/>} />
+            <Route path="/about" element={<About />} />
+          </Routes>
+        </Router>
+      </div>
     </div>
   );
 }

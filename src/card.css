@@ -1,0 +1,23 @@
+.card{
+    border: 1px solid black;
+    width: 300px;
+    height: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    
+    
+}
+.card-top{
+    background-color: antiquewhite;
+    border: 1px solid black;
+    display: flex;
+    height: 60%;
+    justify-content: space-around;
+}
+
+.card-bottom{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
