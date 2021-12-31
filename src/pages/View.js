@@ -14,7 +14,7 @@ export default function View(props) {
           </div>
           <div className="view-data">
             <p className="view-price">${data.price}</p>
-            <button onClick={() => props.deleteCoin(data.name)} className="view-button">Delete</button>
+            <button  onClick={() => props.deleteCoin(data.name)} className="view-button Button ">Delete</button>
           </div>
         </div>
       </div>
@@ -42,7 +42,7 @@ export default function View(props) {
         {list}
       </div>
       <Link to="/">
-        <button>Back To View Page</button>
+        <button className='Button' >Back To View Page</button>
       </Link>
     </div>
   );

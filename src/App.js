@@ -7,7 +7,7 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
-  Links,
+  Link
 } from "react-router-dom";
 import About from "./pages/About";
 import View from "./pages/View";
@@ -19,7 +19,7 @@ export default function App() {
   const [search, setSearch] = React.useState("");
   const [savedCoins, setSavedCoins] = React.useState([]);
   const [pageNumber, setPageNumber] = React.useState(0);
-
+  const [showswidth,setShowwidth] = React.useState(window.innerWidth)
   React.useEffect(() => {
     axios
       .get(
@@ -31,6 +31,11 @@ export default function App() {
       .catch((error) => alert("Error"));
   }, []);
 
+  React.useEffect(()=>{
+    window.addEventListener('resize', function(){
+      setShowwidth(window.innerWidth)
+    })
+  },[])
   function handelChange(Search) {
     setSearch(Search.target.value);
   }
@@ -52,6 +57,7 @@ export default function App() {
     return coin.name.toLowerCase().includes(search.toLowerCase());
   });
 
+  
   const dataPerPage = 5;
   const pagesVisited = pageNumber * dataPerPage;
   const pageCount = Math.ceil(filterCoins.length / dataPerPage);
@@ -96,12 +102,14 @@ export default function App() {
           {cardDisplay}
         </div>
       
-        <h1 className="coin-text">Coins</h1>
-        <Router>
+        
+        
+          {<Router>
           <Routes>
             <Route
               path="/"
               element={
+                ( showswidth > 996 )?
                 <>
                   <div className="coin-search">
                     <form>
@@ -141,13 +149,18 @@ export default function App() {
                       activeClassName={"paginationActive"}
                     />
                   </div>
+                </> : <>
+                <Link to='./view'>
+                <button className="Button" >View</button>
+                </Link>
                 </>
               }
             />
             <Route path="/view" element={<View deleteCoin={deleteCoins} data={savedCoins}/>} />
             <Route path="/about" element={<About />} />
           </Routes>
-        </Router>
+        </Router>}
+        
       </div>
     </div>
   );
