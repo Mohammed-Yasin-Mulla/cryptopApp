@@ -3,23 +3,17 @@ import axios from "axios";
 import Coin from "./Coin";
 import "./App.css";
 import ReactPaginate from "react-paginate";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Link
-} from "react-router-dom";
-import About from "./pages/About";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import View from "./pages/View";
 import Card from "./Card";
-import Navbar from './Navbar'
+import Navbar from "./Navbar";
 
 export default function App() {
   const [coins, setCoins] = React.useState([]);
   const [search, setSearch] = React.useState("");
   const [savedCoins, setSavedCoins] = React.useState([]);
   const [pageNumber, setPageNumber] = React.useState(0);
-  const [showswidth,setShowwidth] = React.useState(window.innerWidth)
+  const [showswidth, setShowwidth] = React.useState(window.innerWidth);
   React.useEffect(() => {
     axios
       .get(
@@ -31,15 +25,15 @@ export default function App() {
       .catch((error) => alert("Error"));
   }, []);
 
-  React.useEffect(()=>{
-    window.addEventListener('resize', function(){
-      setShowwidth(window.innerWidth)
-    })
-  },[])
+  React.useEffect(() => {
+    window.addEventListener("resize", function () {
+      setShowwidth(window.innerWidth);
+    });
+  }, []);
   function handelChange(Search) {
     setSearch(Search.target.value);
   }
-  
+
   function savePress(name, symbol, price, image) {
     setSavedCoins((prevData) => {
       return [{ name: name, symbol: symbol, price: price }, ...prevData];
@@ -47,9 +41,9 @@ export default function App() {
   }
 
   function deleteCoins(name) {
-    setSavedCoins(prevData => {
-      return prevData.filter(savedCoins => savedCoins.name != name)
-    })
+    setSavedCoins((prevData) => {
+      return prevData.filter((savedCoins) => savedCoins.name != name);
+    });
   }
 
   function viewPress() {}
@@ -57,7 +51,6 @@ export default function App() {
     return coin.name.toLowerCase().includes(search.toLowerCase());
   });
 
-  
   const dataPerPage = 5;
   const pagesVisited = pageNumber * dataPerPage;
   const pageCount = Math.ceil(filterCoins.length / dataPerPage);
@@ -85,82 +78,86 @@ export default function App() {
         />
       );
     });
-  
-    const slicedArray = coins.slice(0,4);
-    
-    const cardDisplay = slicedArray.map(data => {return(
-      
-        <Card symbol={data.symbol}  image={data.image}   price={data.current_price}/>
-     
-    )})
+
+  const slicedArray = coins.slice(0, 4);
+
+  const cardDisplay = slicedArray.map((data) => {
+    return (
+      <Card
+        symbol={data.symbol}
+        image={data.image}
+        price={data.current_price}
+      />
+    );
+  });
   return (
     <div>
-        <Navbar/>
+      <Navbar />
       <div className="coin-app">
-      
-        <div className="coin-card">
-          {cardDisplay}
-        </div>
-      
-        
-        
-          {<Router>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                ( showswidth > 996 )?
-                <>
-                  <div className="coin-search">
-                    <form>
-                      <input
-                        type="text"
-                        placeholder="Search"
-                        className="coin-input"
-                        onChange={handelChange}
-                      />
-                    </form>
-                  </div>
-                  <div className="table-heading">
+        <div className="coin-card">{cardDisplay}</div>
 
-                  <Coin
-                    name={"Name"}
-                    image={
-                      "https://static.vecteezy.com/system/resources/previews/000/350/234/original/vector-dollars-coin-icon.jpg"
-                    }
-                    symbol={"Symbol"}
-                    marketcap={"Market Cap"}
-                    price={"Price"}
-                    priceChange={"Percentage"}
-                    volume={"Volume"}
-                    />
-                    </div>
-                  <div className="coin-table">
-                    {displayData}
-                    <ReactPaginate
-                      previewsLabel={"Previous"}
-                      nextLabel={"Next"}
-                      pageCount={pageCount}
-                      onPageChange={changePage}
-                      containerClassName={"paginationBttns"}
-                      previousClassName={"previousBttn"}
-                      nextLinkClassName={"nextBttn"}
-                      disabledClassName={"paginationDisabled"}
-                      activeClassName={"paginationActive"}
-                    />
-                  </div>
-                </> : <>
-                <Link to='./view'>
-                <button className="Button" >View</button>
-                </Link>
-                </>
-              }
-            />
-            <Route path="/view" element={<View deleteCoin={deleteCoins} data={savedCoins}/>} />
-            <Route path="/about" element={<About />} />
-          </Routes>
-        </Router>}
-        
+        {
+          <Router>
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  showswidth > 996 ? (
+                    <>
+                      <div className="coin-search">
+                        <form>
+                          <input
+                            type="text"
+                            placeholder="Search"
+                            className="coin-input"
+                            onChange={handelChange}
+                          />
+                        </form>
+                      </div>
+                      <div className="table-heading">
+                        <Coin
+                          name={"Name"}
+                          image={
+                            "https://static.vecteezy.com/system/resources/previews/000/350/234/original/vector-dollars-coin-icon.jpg"
+                          }
+                          symbol={"Symbol"}
+                          marketcap={"Market Cap"}
+                          price={"Price"}
+                          priceChange={"Percentage"}
+                          volume={"Volume"}
+                        />
+                      </div>
+                      <div className="coin-table">
+                        {displayData}
+                        <ReactPaginate
+                          previewsLabel={"Previous"}
+                          nextLabel={"Next"}
+                          pageCount={pageCount}
+                          onPageChange={changePage}
+                          containerClassName={"paginationBttns"}
+                          previousClassName={"previousBttn"}
+                          nextLinkClassName={"nextBttn"}
+                          disabledClassName={"paginationDisabled"}
+                          activeClassName={"paginationActive"}
+                        />
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <Link to="./view">
+                        <button className="Button">View</button>
+                      </Link>
+                    </>
+                  )
+                }
+              />
+              <Route
+                path="/view"
+                element={<View deleteCoin={deleteCoins} data={savedCoins} />}
+              />
+            </Routes>
+          </Router>
+        }
       </div>
     </div>
   );
